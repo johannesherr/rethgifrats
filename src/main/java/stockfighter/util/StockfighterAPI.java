@@ -6,18 +6,25 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 
-import stockfighter.Stuff;
-
 public class StockfighterAPI {
 
-	Client client = ClientBuilder.newBuilder().build();
+	public static final String BASE_URL = "https://api.stockfighter.io/ob/api";
+	private final Client client = ClientBuilder.newBuilder().build();
 
 	public TMap heartbeat() {
 		return get(base().path("heartbeat"));
 	}
 
 	public TMap isVenueUp(String venueName) {
-		return get(base().path("venues").path(venueName).path("heartbeat"));
+		return get(venue(venueName).path("heartbeat"));
+	}
+
+	public TMap listStocks(String venueName) {
+		return get(venue(venueName).path("stocks"));
+	}
+
+	public TMap orderBook(String venue, String symbol) {
+		return get(venue(venue).path("stocks").path(symbol));
 	}
 
 	private TMap get(WebTarget target) {
@@ -29,6 +36,10 @@ public class StockfighterAPI {
 	}
 
 	private WebTarget base() {
-		return client.target(Stuff.BASE_URL);
+		return client.target(BASE_URL);
+	}
+
+	private WebTarget venue(String venueName) {
+		return base().path("venues").path(venueName);
 	}
 }
