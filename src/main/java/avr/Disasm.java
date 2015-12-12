@@ -1,4 +1,4 @@
-package starfighter;
+package avr;
 
 import java.awt.*;
 import java.io.IOException;
