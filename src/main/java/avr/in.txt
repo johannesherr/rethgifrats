@@ -1,0 +1,26 @@
+    2050 : movw	r30, r22
+    2052 : ld	r21, Z+
+    2054 : and	r21, r21
+    2056 : breq	.+42
+    2058 : movw	r22, r30
+    205a : movw	r26, r24
+    205c : ld	r20, X+
+    205e : cp	r20, r21
+    2060 : cpse	r20, r1
+    2062 : brne	.-8
+    2064 : brne	.+22
+    2066 : movw	r24, r26
+    2068 : ld	r0, Z+
+    206a : and	r0, r0
+    206c : breq	.+18
+    206e : ld	r20, X+
+    2070 : cp	r20, r0
+    2072 : cpse	r20, r1
+    2074 : breq	.-14
+    2076 : movw	r30, r22
+    2078 : cpse	r20, r1
+    207a : rjmp	.-34
+    207c : ldi	r24, 0x01
+    207e : ldi	r25, 0x00
+    2080 : sbiw	r24, 0x01
+    2082 : ret

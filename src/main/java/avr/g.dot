@@ -1,0 +1,190 @@
+digraph {
+node [shape=box, labeljust=l]
+0 [label= <<table border="0" cellspacing="0" cellborder="0">
+                          <tr>
+                              <td>2050 : movw <font color="#000000">Z</font>, <font color="#7FFFFF">r22</font></td>
+                          </tr>
+                       </table> 
+                      >];
+0 -> 1;
+1 [label= <<table border="0" cellspacing="0" cellborder="0">
+                          <tr>
+                              <td>2052 : ld <font color="#55FFFF">r21</font>, <font color="#000000">Z+</font></td>
+                          </tr>
+                       </table> 
+                      >];
+1 -> 2;
+2 [label= <<table border="0" cellspacing="0" cellborder="0">
+                          <tr>
+                              <td>2054 : and <font color="#55FFFF">r21</font>, <font color="#55FFFF">r21</font></td>
+                          </tr>
+                       </table> 
+                      >];
+2 -> 3;
+3 [label= <<table border="0" cellspacing="0" cellborder="0">
+                          <tr>
+                              <td>2056 : breq <font color="#000000">.+42</font><font color="#000000"> </font></td>
+                          </tr>
+                       </table> 
+                      >];
+3 -> 4;
+3 -> 25;
+4 [label= <<table border="0" cellspacing="0" cellborder="0">
+                          <tr>
+                              <td>2058 : movw <font color="#7FFFFF">r22</font>, <font color="#000000">Z</font></td>
+                          </tr>
+                       </table> 
+                      >];
+4 -> 5;
+5 [label= <<table border="0" cellspacing="0" cellborder="0">
+                          <tr>
+                              <td>205a : movw <font color="#000000">X</font>, <font color="#FF7FFF">r24</font></td>
+                          </tr>
+                       </table> 
+                      >];
+5 -> 6;
+6 [label= <<table border="0" cellspacing="0" cellborder="0">
+                          <tr>
+                              <td>205c : ld <font color="#7F7FFF">r20</font>, <font color="#000000">X+</font></td>
+                          </tr>
+                       </table> 
+                      >];
+6 -> 7;
+7 [label= <<table border="0" cellspacing="0" cellborder="0">
+                          <tr>
+                              <td>205e : cp <font color="#7F7FFF">r20</font>, <font color="#55FFFF">r21</font></td>
+                          </tr>
+                       </table> 
+                      >];
+7 -> 8;
+8 [label= <<table border="0" cellspacing="0" cellborder="0">
+                          <tr>
+                              <td>2060 : cpse <font color="#7F7FFF">r20</font>, <font color="#557FFF">r1</font></td>
+                          </tr>
+                       </table> 
+                      >];
+8 -> 9;
+9 [label= <<table border="0" cellspacing="0" cellborder="0">
+                          <tr>
+                              <td>2062 : brne <font color="#000000">.-8</font><font color="#000000"> </font></td>
+                          </tr>
+                       </table> 
+                      >];
+9 -> 6;
+9 -> 10;
+10 [label= <<table border="0" cellspacing="0" cellborder="0">
+                          <tr>
+                              <td>2064 : brne <font color="#000000">.+22</font><font color="#000000"> </font></td>
+                          </tr>
+                       </table> 
+                      >];
+10 -> 11;
+10 -> 22;
+11 [label= <<table border="0" cellspacing="0" cellborder="0">
+                          <tr>
+                              <td>2066 : movw <font color="#FF7FFF">r24</font>, <font color="#000000">X</font></td>
+                          </tr>
+                       </table> 
+                      >];
+11 -> 12;
+12 [label= <<table border="0" cellspacing="0" cellborder="0">
+                          <tr>
+                              <td>2068 : ld <font color="#FF55FF">r0</font>, <font color="#000000">Z+</font></td>
+                          </tr>
+                       </table> 
+                      >];
+12 -> 13;
+13 [label= <<table border="0" cellspacing="0" cellborder="0">
+                          <tr>
+                              <td>206a : and <font color="#FF55FF">r0</font>, <font color="#FF55FF">r0</font></td>
+                          </tr>
+                       </table> 
+                      >];
+13 -> 14;
+14 [label= <<table border="0" cellspacing="0" cellborder="0">
+                          <tr>
+                              <td>206c : breq <font color="#000000">.+18</font><font color="#000000"> </font></td>
+                          </tr>
+                       </table> 
+                      >];
+14 -> 15;
+14 -> 24;
+15 [label= <<table border="0" cellspacing="0" cellborder="0">
+                          <tr>
+                              <td>206e : ld <font color="#7F7FFF">r20</font>, <font color="#000000">X+</font></td>
+                          </tr>
+                       </table> 
+                      >];
+15 -> 16;
+16 [label= <<table border="0" cellspacing="0" cellborder="0">
+                          <tr>
+                              <td>2070 : cp <font color="#7F7FFF">r20</font>, <font color="#FF55FF">r0</font></td>
+                          </tr>
+                       </table> 
+                      >];
+16 -> 17;
+17 [label= <<table border="0" cellspacing="0" cellborder="0">
+                          <tr>
+                              <td>2072 : cpse <font color="#7F7FFF">r20</font>, <font color="#557FFF">r1</font></td>
+                          </tr>
+                       </table> 
+                      >];
+17 -> 18;
+18 [label= <<table border="0" cellspacing="0" cellborder="0">
+                          <tr>
+                              <td>2074 : breq <font color="#000000">.-14</font><font color="#000000"> </font></td>
+                          </tr>
+                       </table> 
+                      >];
+18 -> 12;
+18 -> 19;
+19 [label= <<table border="0" cellspacing="0" cellborder="0">
+                          <tr>
+                              <td>2076 : movw <font color="#000000">Z</font>, <font color="#7FFFFF">r22</font></td>
+                          </tr>
+                       </table> 
+                      >];
+19 -> 20;
+20 [label= <<table border="0" cellspacing="0" cellborder="0">
+                          <tr>
+                              <td>2078 : cpse <font color="#7F7FFF">r20</font>, <font color="#557FFF">r1</font></td>
+                          </tr>
+                       </table> 
+                      >];
+20 -> 21;
+21 [label= <<table border="0" cellspacing="0" cellborder="0">
+                          <tr>
+                              <td>207a : rjmp <font color="#000000">.-34</font><font color="#000000"> </font></td>
+                          </tr>
+                       </table> 
+                      >];
+21 -> 5;
+21 -> 22;
+22 [label= <<table border="0" cellspacing="0" cellborder="0">
+                          <tr>
+                              <td>207c : ldi <font color="#FF7FFF">r24</font>, <font color="#000000">0x01</font></td>
+                          </tr>
+                       </table> 
+                      >];
+22 -> 23;
+23 [label= <<table border="0" cellspacing="0" cellborder="0">
+                          <tr>
+                              <td>207e : ldi <font color="#7F55FF">r25</font>, <font color="#000000">0x00</font></td>
+                          </tr>
+                       </table> 
+                      >];
+23 -> 24;
+24 [label= <<table border="0" cellspacing="0" cellborder="0">
+                          <tr>
+                              <td>2080 : sbiw <font color="#FF7FFF">r24</font>, <font color="#000000">0x01</font></td>
+                          </tr>
+                       </table> 
+                      >];
+24 -> 25;
+25 [label= <<table border="0" cellspacing="0" cellborder="0">
+                          <tr>
+                              <td>2082 : ret <font color="#000000">null</font><font color="#000000"> </font></td>
+                          </tr>
+                       </table> 
+                      >];
+}
