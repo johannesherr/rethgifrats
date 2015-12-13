@@ -1,17 +1,42 @@
 package stockfighter.util;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Date;
+import java.util.Properties;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.ClientRequestFilter;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
+
+import com.google.common.base.Throwables;
 
 public class StockfighterAPI {
 
 	public static final String BASE_URL = "https://api.stockfighter.io/ob/api";
 	private final Client client = ClientBuilder.newBuilder().build();
+	private final String apiKey;
+	private final String account;
+
+	public StockfighterAPI() {
+		try {
+			Properties properties = new Properties();
+			try (InputStream inputStream = Files.newInputStream(Paths.get("creds.txt"))) {
+				properties.load(inputStream);
+			}
+			apiKey = properties.getProperty("key").trim();
+			account = properties.getProperty("account").trim();
+			client.register((ClientRequestFilter) requestContext ->
+					requestContext.getHeaders().putSingle("X-Starfighter-Authorization", apiKey));
+		} catch (IOException e) {
+			throw Throwables.propagate(e);
+		}
+	}
 
 	public TMap heartbeat() {
 		return get(base().path("heartbeat"));
@@ -29,18 +54,9 @@ public class StockfighterAPI {
 		return get(stock(venue, symbol));
 	}
 
-	// 21:44-
-	public static void main(String[] args) {
-		String[] split = "account venue stock price qty direction orderType".split(" ");
-		for (String s : split) {
-			System.out.printf("map.put(\"%1$s\", %1$s);%n", s);
-		}
-		System.out.println();
-	}
-
 	public TMap postOrder(String account, String venue, String stock, int price, int qty, String direction, String orderType) {
 		TMap map = new TMap();
-		map.put("account", account);
+		map.put("account", orConfigured(account));
 		map.put("venue", venue);
 		map.put("stock", stock);
 		map.put("price", price);
@@ -49,6 +65,10 @@ public class StockfighterAPI {
 		map.put("orderType", orderType);
 		Response response = stock(venue, stock).path("orders").request().post(Entity.json(JSON.stringify(map)));
 		return JSON.parse(response.readEntity(String.class));
+	}
+
+	private String orConfigured(String account) {
+		return account == null ? this.account : account;
 	}
 
 	private WebTarget stock(String venue, String symbol) {
@@ -85,11 +105,11 @@ public class StockfighterAPI {
 	}
 
 	public TMap getAllOrderStatus(String venue, String account) {
-		return get(venue(venue).path("accounts").path(account).path("orders"));
+		return get(venue(venue).path("accounts").path(orConfigured(account)).path("orders"));
 	}
 
 	public TMap getAllOrderStatus(String venue, String account, String stock) {
-		return get(venue(venue).path("accounts").path(account).path("stocks").path(stock).path("orders"));
+		return get(venue(venue).path("accounts").path(orConfigured(account)).path("stocks").path(stock).path("orders"));
 	}
 
 }
