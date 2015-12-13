@@ -41,4 +41,13 @@ public class TMap extends LinkedHashMap<String, Object> {
 			return stream.collect(Collectors.toList());
 		}
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder s = new StringBuilder("TMap{\n");
+		entrySet().forEach(e ->
+				s.append("\t" + e.getKey() + " = " + e.getValue() + "\n"));
+		s.append("}");
+		return s.toString();
+	}
 }

@@ -1,20 +1,20 @@
 package stockfighter.util;
 
 import java.io.IOException;
+import java.util.Map;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.google.common.base.Throwables;
-import com.google.common.collect.ImmutableMap;
 
 public class JSON {
 	
-	public static String stringify() {
+	public static String stringify(Map<String, Object> obj) {
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();
 			objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-			return objectMapper.writeValueAsString(ImmutableMap.of("foo", 42));
+			return objectMapper.writeValueAsString(obj);
 		} catch (JsonProcessingException e) {
 			throw Throwables.propagate(e);
 		}
