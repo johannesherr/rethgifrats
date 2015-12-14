@@ -8,8 +8,6 @@ public class Stuff {
 	public static final String TESTEX = "TESTEX";
 	public static final String FOOBAR = "FOOBAR";
 	public static final String EXB_123456 = "EXB123456";
-	public static final String BUY = "buy";
-	public static final String SELL = "sell";
 
 	// 21:40-
 	public static void main(String[] args) throws InterruptedException {
@@ -27,12 +25,12 @@ public class Stuff {
 //		System.out.println("stocks = " + stocks);
 //		System.out.println();
 //
-//		TMap orderBook = api.orderBook(TESTEX, FOOBAR);
-//		System.out.println("orderBook = " + orderBook);
+//		TMap getOrderBook = api.getOrderBook(TESTEX, FOOBAR);
+//		System.out.println("getOrderBook = " + getOrderBook);
 //		System.out.println("bids:");
-//		orderBook.getList("bids").forEach(System.out::println);
+//		getOrderBook.getList("bids").forEach(System.out::println);
 //		System.out.println("asks:");
-//		orderBook.getList("asks").forEach(System.out::println);
+//		getOrderBook.getList("asks").forEach(System.out::println);
 //		System.out.println();
 //
 //		TMap tMap = api.postOrder(EXB_123456, TESTEX, FOOBAR, 1, 20, BUY, "limit");

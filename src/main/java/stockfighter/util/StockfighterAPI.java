@@ -18,6 +18,8 @@ import com.google.common.base.Throwables;
 
 public class StockfighterAPI {
 
+	public static final String BUY = "buy";
+	public static final String SELL = "sell";
 	public static final String BASE_URL = "https://api.stockfighter.io/ob/api";
 	private final Client client = ClientBuilder.newBuilder().build();
 	private final String apiKey;
@@ -50,7 +52,7 @@ public class StockfighterAPI {
 		return get(venue(venueName).path("stocks"));
 	}
 
-	public TMap orderBook(String venue, String symbol) {
+	public TMap getOrderBook(String venue, String symbol) {
 		return get(stock(venue, symbol));
 	}
 
@@ -59,7 +61,9 @@ public class StockfighterAPI {
 		map.put("account", orConfigured(account));
 		map.put("venue", venue);
 		map.put("stock", stock);
-		map.put("price", price);
+		if (price != -1) {
+			map.put("price", price);
+		}
 		map.put("qty", qty);
 		map.put("direction", direction);
 		map.put("orderType", orderType);
