@@ -21,9 +21,9 @@ public class Stuff {
 //		System.out.println("venueUp = " + venueUp);
 //		System.out.println();
 //
-//		TMap stocks = api.listStocks(TESTEX);
-//		System.out.println("stocks = " + stocks);
-//		System.out.println();
+		TMap stocks = api.listStocks(TESTEX);
+		System.out.println("stocks = " + stocks);
+		System.out.println();
 //
 //		TMap getOrderBook = api.getOrderBook(TESTEX, FOOBAR);
 //		System.out.println("getOrderBook = " + getOrderBook);
@@ -57,10 +57,10 @@ public class Stuff {
 //		System.out.println();
 
 //		TMap allOrderStatusStock = api.getAllOrderStatus(TESTEX, EXB_123456, FOOBAR);
-		TMap allOrderStatusStock = api.getAllOrderStatus(TESTEX, null, FOOBAR);
-		System.out.println("allOrderStatusStock = " + allOrderStatusStock);
-		System.out.println();
-		allOrderStatusStock.getList("orders").forEach(System.out::println);
+//		TMap allOrderStatusStock = api.getAllOrderStatus(TESTEX, null, FOOBAR);
+//		System.out.println("allOrderStatusStock = " + allOrderStatusStock);
+//		System.out.println();
+//		allOrderStatusStock.getList("orders").forEach(System.out::println);
 
 	}
 

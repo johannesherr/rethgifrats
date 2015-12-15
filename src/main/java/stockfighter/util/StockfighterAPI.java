@@ -14,6 +14,7 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 
+import org.glassfish.jersey.client.filter.EncodingFilter;
 import org.glassfish.jersey.message.GZipEncoder;
 
 import com.google.common.base.Throwables;
@@ -38,6 +39,7 @@ public class StockfighterAPI {
 			client.register((ClientRequestFilter) requestContext ->
 					requestContext.getHeaders().putSingle("X-Starfighter-Authorization", apiKey));
 			client.register(GZipEncoder.class);
+			client.register(EncodingFilter.class);
 		} catch (IOException e) {
 			throw Throwables.propagate(e);
 		}
