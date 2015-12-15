@@ -3,7 +3,9 @@ package stockfighter.levels;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -21,23 +23,95 @@ public class Level2 {
 	// 22:55-
 	// vis 23:13-
 	public static void main(String[] args) throws InterruptedException {
-		String venue = "RTSPEX";
-		String stock = "WSCM";
+		String venue = "EXYBEX";
+		String stock = "MPI";
 		StockfighterAPI api = new StockfighterAPI();
 
+//		api.cancelOrder(venue, stock, 104);
 		Consumer<TMap> update = visualise();
 
+		List<Integer> orders = new LinkedList<>();
+		AtomicInteger remaining = new AtomicInteger(100_000 - 59554);
+//		int price = 4400;
+		int price = -1;
+
+		AtomicInteger sentinel = new AtomicInteger();
+
 		repeat(() -> {
+			int bought = Stuff.getAllBought(venue, stock, api);
+			int remaining2 = 100_000 - bought;
+			
 			TMap orderBook = api.getOrderBook(venue, stock);
 			System.out.println("orderBook = " + orderBook);
 			update.accept(orderBook);
-		});
 
-//		while (true) {
-//			TMap quote = api.getQuote(venue, stock);
-//			System.out.println("quote = " + quote);
-//			Thread.sleep(500);
-//		}
+			TMap quote = api.getQuote(venue, stock);
+			System.out.println("quote = " + quote.getInt("last"));
+			
+			TMap allOrderStatus = api.getAllOrderStatus(venue, null, stock);
+			List<TMap> orders1 = allOrderStatus.getList("orders");
+			for (TMap tMap : orders1) {
+				if (tMap.getBool("open") && tMap.getInt("id") != sentinel.get()) {
+					api.cancelOrder(venue, stock, tMap.getInt("id"));
+				}
+			}
+
+			List<TMap> asks = orderBook.getList("asks");
+			for (TMap ask : asks) {
+				Integer price1 = ask.getInt("price");
+				if (price1 < 4557) {
+					Integer qty = ask.getInt("qty");
+					api.postOrder(null, venue, stock, price1, Math.min(qty, remaining2), StockfighterAPI.BUY, "limit");
+				}
+			}
+
+			List<TMap> bids = orderBook.getList("bids");
+			int max = 0;
+			Integer myprice = 0;
+			if (sentinel.get() > 0) {
+				myprice = api.getOrderStatus(venue, stock, sentinel.get()).getInt("price");
+			}
+			for (TMap bid : bids) {
+				Integer price1 = bid.getInt("price");
+				if (price != myprice)
+					max = Math.max(max, price1);
+			}
+			if (max < myprice) {
+				if (sentinel.get() > 0) {
+					api.cancelOrder(venue, stock, sentinel.get());
+				}
+			}
+			if (max < 4557) {
+				if (sentinel.get() > 0) {
+					api.cancelOrder(venue, stock, sentinel.get());
+				}
+
+				TMap order = api.postOrder(null, venue, stock, max + 1, Math.min(10_000, remaining2), StockfighterAPI.BUY, "limit");
+				Integer id = order.getInt("id");
+				sentinel.set(id);
+			}
+
+//			boolean allClosed = true;
+//			for (Integer order : orders) {
+//				TMap orderStatus = api.getOrderStatus(venue, stock, order);
+//				boolean open = orderStatus.getBool("open");
+//				if (!open) {
+//					remaining.addAndGet(-1 * orderStatus.getInt("totalFilled"));
+//				} else {
+//					allClosed = false;
+//				}
+//			}
+//
+//			if (price > -1 && allClosed) {
+//				TMap order = api.postOrder(null, venue, stock, price, 10_000, StockfighterAPI.BUY, "limit");
+//				System.out.println("order = " + order);
+//				orders.add(order.getInt("id"));
+//			}
+//
+//			if (remaining.get() == 0) {
+//				System.out.println("ALL DONE!!");
+//			}
+		});
 
 	}
 
